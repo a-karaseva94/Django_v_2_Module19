@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+</head>
+<body>
+    <pagename>
+        {% block pagename %}
+        <h1>Заголовки страниц</h1>
+        {% endblock %}
+    </pagename>
+
+    <menu>
+         {% block menu %}
+         <ul>
+             <h4><p><a href="http://127.0.0.1:8000/"> Главная</a></p>
+             <p><a href="http://127.0.0.1:8000/games"> Магазин</a></p>
+             <p><a href="http://127.0.0.1:8000/cart"> Корзина</a></p>
+             <p><a href="http://127.0.0.1:8000/django_sign_up" style="color: red"> Регистрация</a></p></h4>
+        </ul>
+        {% endblock %}
+    </menu>
+
+    <content>
+        {% block content %}
+        <p></p>
+        {% endblock %}
+    </content>
+</body>
+</html>
