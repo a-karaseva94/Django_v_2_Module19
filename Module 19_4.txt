@@ -1,0 +1,43 @@
+1. Заполнение таблицы Buyer данными на тестовом сайте https://sqliteonline.com/, используя sql запросы:
+
+INSERT INTO task1_buyer (name, balance, age)  VALUES 
+('Irina', 29000, 41),
+('Nataliya', 19000, 38),
+('Marina', 15000, 26),
+('Egor', 51000, 55);
+
+# просмотр получившегося:
+SELECT * FROM task1_buyer
+
+скачиваем БД - приложена БД "sqlite3(Online)" (вне папки My_app) и скриншот наполнения.
+
+2. Создание нескольких объектов в базе данных My_app (БД внутри проекта), используя object.create. 
+Используя запросы в базу данных, изменение одного из элементов Games: заголовок, содержание:
+
+Переход в проект: cd My_app
+Переход в консоль: python manage.py shell
+
+QuerySet запросы:
+
+#добавление покупателей
+
+from task1.models import Buyer
+Buyer.objects.create(name='George', balance=50120.15, age=51)
+Buyer.objects.create(name='Miki', balance=3500.10, age=14)
+Buyer.objects.create(name='Alexander', balance=15250.10, age=27)
+
+#изменение названия и описания игры
+
+from task1.models import Games
+Games.objects.filter(title='Legends').update(title='Legends of World', description='For professional')
+
+3.Запрос на получение всех объектов из Buyer. Удаление одного из объектов базы данных с мощью метода delete().
+buyers = Buyer.objects.all()
+buyers
+delete_buyer = Buyer.objects.get(id=6)
+delete_buyer.delete()
+
+4. Фильтрация по объектам в БД с помощью метода filter(): покупатели младше 18 лет.
+Buyer.objects.filter(age__lte=18) 
+
+
