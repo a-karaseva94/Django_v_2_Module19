@@ -21,7 +21,7 @@ from task1.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', platform),
-    path('games/', games_store),
+    path('games/', paginator_func),
     path('cart/', cart_of_store),
     path('django_sign_up/', sign_up_by_django),
 ]

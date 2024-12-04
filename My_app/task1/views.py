@@ -2,26 +2,28 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import UserRegister
 from .models import *
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
-# Из задания task4
+# Страницы (из задания task4)
 def platform(request):
     return render(request, 'platform.html')
 
 
-def games_store(request):
-    games = Games.objects.all()
-    context = {
-        'games': games,
-    }
-    return render(request, 'games.html', context)
+# Заменила на пагинатор ниже
+# def games_store(request):
+#     games = Games.objects.all()
+#     context = {
+#         'games': games,
+#     }
+#     return render(request, 'games.html', context)
 
 
 def cart_of_store(request):
     return render(request, 'cart.html')
 
 
-# Из задания task5
+# Регистрация (формы из задания task5)
 def sign_up_by_django(request):
     buyers = Buyer.objects.all()
     users = [i.name for i in buyers]
@@ -51,3 +53,21 @@ def sign_up_by_django(request):
         else:
             form = UserRegister()
     return render(request, 'registration_page.html', context)
+
+# Пагинатор для игр
+def paginator_func(request):
+    games = Games.objects.all().order_by('-id')
+    per_page = request.GET.get('per_page',3)
+    paginator = Paginator(games, per_page)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    context = {
+        'page_obj': page_obj,
+        'per_page': per_page,
+    }
+    return render(request, 'games.html', context)

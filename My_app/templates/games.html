@@ -18,16 +18,46 @@
         {% endblock %}
     </menu>
 
-    <content>
-        {% block content %}
-        <ul>
-            {% for game in games %}
+
+    {% block content %}
+    <h1>Список игр</h1>
+    <ul>
+        {% for game in page_obj %}
             <li>{{ game.title }} | {{ game.description }}. Стоимость: {{ game.cost }}
                     <button>Купить</button></li>
-            {% endfor %}
+        {% empty %}
+            <p>Нет игр.</p>
+        {% endfor %}
+    </ul>
+
+
+    <div class="pagination">
+        <ul>
+        <h4>Страницы:</h4>
+
+        <form method="get">
+            <label for="per_page">Показать на странице:</label>
+            <select id="per_page" name="per_page" >
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+            </select>
+            <button type="submit" class="paginator_bt">Применить</button>
+        </form>
+
+            {% if page_obj.has_previous %}
+                <a href="?page=1"><<</a>
+                <br><a href="?page={{ page_posts.previous_page_number }}">Предыдущая</a>
+            {% endif %}
+            <br>{{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+            {% if page_obj.has_next %}
+                <br><a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+                <br><a href="?page={{ page_obj.paginator.num_pages }}">>>></a>
+            {% endif %}
         </ul>
-        {% endblock %}
-    </content>
+    </div>
+    {% endblock %}
 
 
 </body>
